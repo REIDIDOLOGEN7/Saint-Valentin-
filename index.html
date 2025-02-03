@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saint-Valentin ❤️</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background: linear-gradient(to bottom, #ffcccc, #ff99cc);
+    color: white;
+    overflow-x: hidden;
+}
+
+.container {
+    margin: 50px auto;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.names {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ff4d94;
+    text-shadow: 0 0 10px white;
+    animation: glow 2s infinite alternate;
+}
+
+.love-message {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #ff4d94;
+}
+
+#countdown {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: red;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px white;
+}
+
+.photo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.photo-frame {
+    width: 150px;
+    height: 150px;
+    border: 5px solid #ff4d94;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: white;
+    box-shadow: 0 0 10px pink;
+    padding: 5px;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.heart-between {
+    font-size: 40px;
+    margin: 0 20px;
+    animation: heartbeat 1.5s infinite;
+}
+
+.disabled {
+    background: grey;
+    cursor: not-allowed;
+}
+
+.enabled {
+    background: red;
+    cursor: pointer;
+    box-shadow: 0 0 10px white;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px white; }
+    to { text-shadow: 0 0 20px white; }
+}
+
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 20px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10%); }
+    100% { transform: translateY(100vh); opacity: 0; }
+
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="music.mp3" type="audio/mp3">
+        Votre navigateur ne supporte pas l’audio.
+    </audio>
+
+    <div class="hearts-container"></div>
+    <div class="flower-column left"></div>
+
+    <div class="container">
+        <h1 class="names">💖 Reidid & Leticia 💖</h1>
+
+        <div class="photo-section">
+            <div class="photo-frame">
+                <img src="reidid.jpg" alt="Reidid">
+                <p>💙 Reidid 💙</p>
+            </div>
+            <div class="heart-between">❤️</div>
+            <div class="photo-frame">
+                <img src="leticia.jpg" alt="Leticia">
+                <p>💖 Leticia 💖</p>
+            </div>
+        </div>
+
+        <p class="love-message">"Notre amour grandit chaque jour 🥰"</p>
+        <p>Saint-Valentin arrive dans :</p>
+
+        <div id="countdown">
+            <span id="days"></span> jours, 
+            <span id="hours"></span> heures, 
+            <span id="minutes"></span> minutes, 
+            <span id="seconds"></span> secondes
+        </div>
+
+        <p>❤️ Hâte de célébrer notre amour ❤️</p>
+
+        <a id="love-message-link" href="message.html" class="disabled">💌 Voir ton message secret 💌</a>
+    </div>
+
+    <div class="flower-column right"></div>
+    <script>const targetDate = new Date("February 14, 2025 00:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const timeLeft = targetDate - now;
+
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+
+    if (timeLeft < 0) {
+        document.getElementById("countdown").innerHTML = "C'est la Saint-Valentin ! ❤️🌹💏";
+        let link = document.getElementById("love-message-link");
+        link.classList.remove("disabled");
+        link.classList.add("enabled");
+        link.removeAttribute("onclick");
+    }
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    document.querySelector(".hearts-container").appendChild(heart);
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+    heart.style.fontSize = Math.random() * 20 + 10 + "px";
+
+    setTimeout(() => { heart.remove(); }, 5000);
+}
+
+setInterval(createHeart, 300);
+</script>
+</body>
+</html>
