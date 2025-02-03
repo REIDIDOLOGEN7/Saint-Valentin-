@@ -3,13 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message pour Leticia 💌</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Message pour mon amour ❤️🌹</title>
+    <style>
+        body {
+            background-color: #ffe6f2;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 3em;
+            margin-top: 50px;
+            animation: fadeIn 2s ease-in-out;
+            text-shadow: 2px 2px 10px #ff1493;
+        }
+        .message, .waiting {
+            font-size: 1.7em;
+            color: #880e4f;
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+            animation: fadeIn 3s ease-in-out;
+        }
+        .highlight {
+            color: #ff1493;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-shadow: 2px 2px 5px #ff69b4;
+        }
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            opacity: 0.8;
+            animation: float 5s infinite ease-in-out;
+        }
+        .countdown {
+            font-size: 2em;
+            color: #ff1493;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-    <div class="message-container">
-        <h1>💖 Joyeuse Saint-Valentin, mon amour 💖</h1>
-        <p class="love-message">"Tu es la plu belle chose qui me soit arrivé ,ma vie, mon amour éternel. Je t’aime infiniment. 🥰🌹"</p>
+    <h1>À mon amour éternel, Leticia ❤️🌹</h1>
+
+    <div id="waiting" class="waiting">
+        ❤️ BB stp, patiente un peu... 💕<br>
+        Ce message magique s'ouvrira dans :  
+        <div id="countdown" class="countdown"></div>
     </div>
+
+    <div id="message" class="message" style="display: none;">
+        Mon amour 💖, <br><br>
+        Depuis que tu es entrée dans ma vie, chaque jour est une mélodie douce 🎶, chaque instant un rêve éveillé ✨.  
+        Ton sourire illumine mon cœur comme le soleil réchauffe la terre ☀️, et tes yeux sont des étoiles qui guident mon âme 🌟.  
+        <br><br>
+        <span class="highlight">Tu es mon souffle, mon battement de cœur, ma raison de sourire chaque matin 💞.</span>  
+        Sans toi, le monde serait terne 🌍💔, mais avec toi, il est rempli de magie et d’amour ❤️🔥.  
+        <br><br>
+        Je promets de t’aimer aujourd’hui, demain et pour l’éternité 💘⏳. Chaque battement de mon cœur murmure ton nom… Leticia 💓.  
+        <br><br>
+        <span class="highlight">Je t’aime infiniment, mon amour ❤️💋.</span>  
+    </div>
+
+    <audio id="music" autoplay loop style="display: none;">
+        <source src="musique.m4a" type="audio/mpeg">
+    </audio>
+
+    <div class="hearts"></div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            document.querySelector(".hearts").appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 300);
+
+        function updateCountdown() {
+            const targetDate = new Date(new Date().getFullYear(), 1, 14, 0, 0, 0); // 14 février
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById("waiting").style.display = "none";
+                document.getElementById("message").style.display = "block";
+                document.getElementById("music").style.display = "block";
+                document.getElementById("music").play();
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML =  
+                `${days}j ${hours}h ${minutes}m ${seconds}s`;
+
+            setTimeout(updateCountdown, 1000);
+        }
+
+        updateCountdown();
+    </script>
 </body>
 </html>
